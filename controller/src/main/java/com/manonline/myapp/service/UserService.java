@@ -1,6 +1,6 @@
-package com.startter.service;
+package com.manonline.myapp.service;
 
-import com.startter.common.IService;
+import com.manonline.myapp.common.IService;
 import org.springframework.stereotype.Service;
 
 /**

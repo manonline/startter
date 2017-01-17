@@ -1,6 +1,6 @@
-package com.startter.repository;
+package com.manonline.myapp.repository;
 
-import com.startter.common.IRepository;
+import com.manonline.myapp.common.IRepository;
 import org.springframework.stereotype.Repository;
 
 /**

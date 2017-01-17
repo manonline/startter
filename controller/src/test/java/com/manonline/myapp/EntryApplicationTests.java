@@ -1,4 +1,4 @@
-package com.startter;
+package com.manonline.myapp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
