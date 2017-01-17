@@ -1,0 +1,13 @@
+
+# let's not ignore git setting
+# .gitignore
+
+# ignore OS files (mac)
+*.DS_Store
+
+# ignore IJ IDE files 
+*.iml
+.idea/
+
+# ignore build output files
+target/
