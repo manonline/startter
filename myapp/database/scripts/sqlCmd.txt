@@ -1,0 +1,8 @@
+### commands must be executed from scripts directory
+# 1. create login
+psql -U postgres -f ../ddl/000-create_login.sql
+
+# 2. create database
+psql -U postgres -f ../ddl/001-create_database.sql
+
+# 3. create tables
