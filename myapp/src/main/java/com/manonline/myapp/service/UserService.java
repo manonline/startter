@@ -8,5 +8,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService implements IService {
+    public int createUser() {
+        return 0;
+    }
 
+    public int updateUser() {
+        return 0;
+    }
+
+    public int listUser() {
+        return 0;
+    }
+
+    public int deleteUser() {
+        return 0;
+    }
 }
