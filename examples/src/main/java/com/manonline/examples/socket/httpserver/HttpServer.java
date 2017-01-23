@@ -51,7 +51,6 @@ public class HttpServer {
     }
 
     public static void main(String[] args) {
-
         // set document root
         File docroot;
         try {
