@@ -103,7 +103,7 @@ public class XmlUtils {
      * @return String
      */
     public static boolean checkValidity(String filePath) {
-        String[] array = filePath.split(".");
+        String[] array = filePath.split("");
         if (array[array.length - 1].equals("xml")) {
             return true;
         } else {
@@ -166,7 +166,7 @@ public class XmlUtils {
      * @return String
      */
     public static String getTextByFullName(Document doc, String fullname) {
-        String path[] = StringUtils.toStringArray(fullname, ".");
+        String path[] = StringUtils.toStringArray(fullname, "");
         Element e = doc.getDocumentElement();
         for (int i = 1; i < path.length; i++) {
             e = getChildByName(e, path[i]);
@@ -184,7 +184,7 @@ public class XmlUtils {
      * @return String
      */
     public static String getTextByFullName(Element parent, String fullname) {
-        String path[] = StringUtils.toStringArray(fullname, ".");
+        String path[] = StringUtils.toStringArray(fullname, "");
         Element e = parent;
         for (int i = 0; i < path.length; i++) {
             e = getChildByName(e, path[i]);

@@ -1,7 +1,5 @@
 package com.manonline.examples.bean.validation.validator;
 
-import com.manonline.examples.bean.validation.validator.NotEmptyValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
