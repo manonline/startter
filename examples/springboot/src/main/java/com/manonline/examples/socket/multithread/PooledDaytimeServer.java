@@ -23,6 +23,9 @@ public class PooledDaytimeServer {
                 try {
                     Socket connection = server.accept();
                     Callable<Void> task = new DaytimeTask(connection);
+                    /**
+                     * Note : use ExecutorService
+                     */
                     pool.submit(task);
                 } catch (IOException ex) {
                     // handle exceptions

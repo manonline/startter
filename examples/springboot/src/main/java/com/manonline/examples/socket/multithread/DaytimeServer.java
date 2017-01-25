@@ -17,6 +17,10 @@ public class DaytimeServer {
         try (ServerSocket server = new ServerSocket(PORT)) {
             while (true) {
                 try (Socket connection = server.accept()) {
+                    /**
+                     * Note : focus on serving the request in the same thread and cannot
+                     * accept a new request before the current request is served
+                     */
                     Writer out = new OutputStreamWriter(connection.getOutputStream());
                     Date now = new Date();
                     out.write(now.toString() + "\r\n");

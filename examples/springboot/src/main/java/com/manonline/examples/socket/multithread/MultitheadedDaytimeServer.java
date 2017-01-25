@@ -18,6 +18,11 @@ public class MultitheadedDaytimeServer {
             while (true) {
                 try {
                     Socket connection = server.accept();
+                    /**
+                     * Note : serving the request in a new thread, so the current thread can run and start accepting
+                     * new request; the only thing passed to the new thread is a connection, i.e. socket, and thread
+                     * can get the input/output stream
+                     */
                     Thread task = new DaytimeThread(connection);
                     task.start();
                 } catch (IOException ex) {
@@ -39,6 +44,7 @@ public class MultitheadedDaytimeServer {
         @Override
         public void run() {
             try {
+                // in this thread, get the connection, parse the input and send the response
                 Writer out = new OutputStreamWriter(connection.getOutputStream());
                 Date now = new Date();
                 out.write(now.toString() + "\r\n");

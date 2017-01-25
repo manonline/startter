@@ -17,6 +17,9 @@ public class MyHttpHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         HttpRequest request = new HttpRequest(httpExchange);
         HttpResponse response = new HttpResponse(httpExchange);
+        /**
+         * NOTE : actual handlers are retrived from context
+         */
         Handler handler = Context.getHandler(request.getReuestURI().getPath());
         handler.service(request, response);
     }

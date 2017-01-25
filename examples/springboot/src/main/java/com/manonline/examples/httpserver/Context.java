@@ -27,9 +27,14 @@ public class Context {
             for (Element ele : handlers) {
                 String handle_class = XmlUtils.getChildText(ele, "handler-class");
                 String url_pattern = XmlUtils.getChildText(ele, "url-pattern");
-
+                /**
+                 * Note : create handler objects that is specified in context.xml
+                 */
+                // load class object based on class name
                 Class<?> cls = Class.forName(handle_class);
+                // create instance based on object class
                 Object newInstance = cls.newInstance();
+                // put the instance into contextMap, so that the instance can be retrieved when uri matches
                 if (newInstance instanceof HttpHandler) {
                     contextMap.put(contextPath + url_pattern, (HttpHandler) newInstance);
                 }

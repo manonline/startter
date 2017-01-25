@@ -46,7 +46,6 @@ public class XmlUtils {
      */
     public static Document load(String xmlfile) throws Exception {
         javax.xml.parsers.DocumentBuilderFactory factory =
-
                 javax.xml.parsers.DocumentBuilderFactory.newInstance();
         factory.setIgnoringComments(false);
         factory.setIgnoringElementContentWhitespace(false);
@@ -68,7 +67,6 @@ public class XmlUtils {
      */
     public static Document load(File xmlfile) throws Exception {
         javax.xml.parsers.DocumentBuilderFactory factory =
-
                 javax.xml.parsers.DocumentBuilderFactory.newInstance();
         factory.setIgnoringComments(false);
         factory.setIgnoringElementContentWhitespace(false);

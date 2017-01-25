@@ -16,7 +16,7 @@ public class RequestProcessor implements Runnable {
     private final static Logger logger = Logger.getLogger(RequestProcessor.class.getCanonicalName());
 
     private File rootDirectory;
-    private String indexFileName = "infex.html";
+    private String indexFileName = "index.html";
     private Socket connection;
 
     public RequestProcessor(File rootDirectory, String indexFileName, Socket connection) {
@@ -27,13 +27,14 @@ public class RequestProcessor implements Runnable {
         try {
             rootDirectory = rootDirectory.getCanonicalFile();
         } catch (IOException ex) {
+            // handle exception
         }
         // set index page
         this.rootDirectory = rootDirectory;
         if (indexFileName != null) {
             this.indexFileName = indexFileName;
         }
-        // set connection
+        // set connection, i.e. socket for both read and write
         this.connection = connection;
     }
 
@@ -41,26 +42,33 @@ public class RequestProcessor implements Runnable {
     public void run() {
         String root = rootDirectory.getPath();
         try {
+            // create reader and writer from input/output stream
+            Reader in = new InputStreamReader(new BufferedInputStream(connection.getInputStream()), "US-ASCII");
+            // use raw stream, because there is a file to be returned as binary flow, otherwise reader
             OutputStream raw = new BufferedOutputStream(connection.getOutputStream());
             Writer out = new OutputStreamWriter(raw);
-            Reader in = new InputStreamReader(new BufferedInputStream(connection.getInputStream()), "US-ASCII");
+
+            // read the request
             StringBuilder requestLine = new StringBuilder();
             while (true) {
                 int c = in.read();
                 if (c == '\r' || c == '\n') break;
                 requestLine.append((char) c);
             }
-
             String get = requestLine.toString();
             logger.info(connection.getRemoteSocketAddress() + " " + get);
 
+            // get the request method
             String[] tokens = get.split("\\s+");
             String method = tokens[0];
             String version = "";
 
+            // process request based on request method
             if (method.equals("GET")) {
                 String fileName = tokens[1];
-                if (fileName.endsWith("/")) fileName += indexFileName;
+                if (fileName.endsWith("/")) {
+                    fileName += indexFileName;
+                }
                 String contentType = URLConnection.getFileNameMap().getContentTypeFor(fileName);
                 if (tokens.length > 2) {
                     version = tokens[2];
@@ -71,8 +79,10 @@ public class RequestProcessor implements Runnable {
                 if (theFile.canRead() && theFile.getCanonicalPath().startsWith(root)) {
                     byte[] theData = Files.readAllBytes(theFile.toPath());
                     if (version.startsWith("HTTP/")) {
+                        // send the header
                         sendHeader(out, "HTTP/1.0 200 OK", contentType, theData.length);
                     }
+                    // send the binary stream
                     raw.write(theData);
                     raw.flush();
                 } else {
@@ -110,6 +120,7 @@ public class RequestProcessor implements Runnable {
             }
         }
     }
+
     private void sendHeader(Writer out, String responseCode, String contentType, int length) throws IOException {
         out.write(responseCode + "\r\n");
         Date now = new Date();
