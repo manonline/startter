@@ -1,3 +1,9 @@
+package com.manonline.examples.generic;
+
+public class GenericType {
+
+}
+
 /**
  * Created by Administrator on 2017/1/31.
  */
