@@ -1,4 +1,4 @@
-package com.manonline.examples.collection;
+package com.manonline.examples.collection.map;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,14 @@ import java.util.Set;
 
 /**
  * Created by davidqi on 1/31/17.
+ * HashMap -> Table[] -> Node<K, V> -> Node<K, V>
+ *     Node<K, V> implements Entry<K, V>
+ *     Node<K, V>.next -> Node<K, V>
+ *     ===========================================
+ *     Set<K, v> EntrySet
+ *     Set<K> KeySet
+ *     Collections<V> Vaules
+ *     ===========================================
  */
 public class HashMapTest {
 
