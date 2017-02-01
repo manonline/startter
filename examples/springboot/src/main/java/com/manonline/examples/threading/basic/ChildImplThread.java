@@ -1,4 +1,4 @@
-package com.manonline.examples.threading;
+package com.manonline.examples.threading.basic;
 
 public class ChildImplThread implements Runnable {
 

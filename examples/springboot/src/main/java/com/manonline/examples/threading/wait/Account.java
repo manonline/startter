@@ -1,4 +1,4 @@
-package com.manonline.examples.threading.mutul;
+package com.manonline.examples.threading.wait;
 
 /**
  * public synchronized void add(int num) 锁就是这个方法所在的对象。 public static

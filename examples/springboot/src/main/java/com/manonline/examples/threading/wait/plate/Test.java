@@ -1,4 +1,6 @@
-package com.manonline.examples.threading.mutul;
+package com.manonline.examples.threading.wait.plate;
+
+import com.manonline.examples.threading.mutul.CThread;
 
 public class Test {
 

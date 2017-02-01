@@ -1,4 +1,4 @@
-package com.manonline.examples.threading.mutul;
+package com.manonline.examples.threading.wait.plate;
 
 /**
  *  生产者/消费者模式其实是一种很经典的线程同步模型，很多时候，并不是光保证多个线程对某共享资源操作的互斥性就够了，往往多个线程之间都是有协作的。

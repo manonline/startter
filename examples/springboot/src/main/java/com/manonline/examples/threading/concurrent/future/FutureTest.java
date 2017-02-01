@@ -1,4 +1,4 @@
-package com.manonline.examples.threading;
+package com.manonline.examples.threading.concurrent.future;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
