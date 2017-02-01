@@ -1,33 +1,21 @@
 # 容器 ：存放数据／对象的对象；实现增删改查操作；
-* Collection
-Collection是最基本的集合接口，一个Collection代表一组Object，Java SDK不提供直接继承自Collection的类，Java SDK提供的类都是继承自Collection的“子接口”如List和Set。
-* List
-以元素插入的次序来放置元素，不会重新排列。
-* Set
-不接爱重复元素，它会使用自己内部的一个排列机制。
-* Map
-一群成对的key-value对象，即所持有的是key-value pairs。Map中不能有重复的key，它拥有自己的内部排列机制.
-* Vector
-非常类似ArrayList，但是Vector是同步的。由Vector创建的Iterator，虽然和ArrayList创建的Iterator是同一接口，但是，因为Vector是同步的，当一个Iterator被创建而且正在被使用，另一个线程改变了Vector的状态（例 如，添加或删除了一些元素），这时调用Iterator的方法时将抛出ConcurrentModificationException，因此必须捕获该异常。
-Java容器类类库的用途是“保存对象”，它分为两类：
-Collection----一组独立的元素，通常这些元素都服从某种规则。List必须保持元素特定的顺序，而Set不能有重复元素。
-Map----一组成对的“键值对”对象，即其元素是成对的对象，最典型的应用就是数据字典，并且还有其它广泛的应用。另外，Map可以返回其所有键组成的Set和其所有值组成的Collection，或其键值对组成的Set，并且还可以像数组一样扩展多维Map，只要让Map中键值对的每个“值”是一个Map即可。
-1.迭代器
-迭代器是一种设计模式，它是一个对象，它可以遍历并选择序列中的对象，而开发人员不需要了解该序列的底层结构。迭代器通常被称为“轻量级”对象，因为创建它的代价小。
-Java中的Iterator功能比较简单，并且只能单向移动：
-(1) 使用方法iterator()要求容器返回一个Iterator。第一次调用Iterator的next()方法时，它返回序列的第一个元素。
-(2) 使用next()获得序列中的下一个元素。
-(3) 使用hasNext()检查序列中是否还有元素。
-(4) 使用remove()将迭代器新返回的元素删除。
-Iterator是Java迭代器最简单的实现，为List设计的ListIterator具有更多的功能，它可以从两个方向遍历List，也可以从List中插入和删除元素。
-
-
-
-1、容器类和Array的区别、择取 * 容器类仅能持有对象引用（指向对象的指针），而不是将对象信息copy一份至数列某位置。 * 一旦将对象置入容器内，便损失了该对象的型别信息。 
-2、 * 在各种Lists中，最好的做法是以ArrayList作为缺省选择。当插入、删除频繁时，使用LinkedList()； Vector总是比ArrayList慢，所以要尽量避免使用。 * 在各种Sets中，HashSet通常优于HashTree（插入、查找）。只有当需要产生一个经过排序的序列，才用TreeSet。 HashTree存在的唯一理由：能够维护其内元素的排序状态。 * 在各种Maps中 HashMap用于快速查找。 * 当元素个数固定，用Array，因为Array效率是最高的。 
-结论：最常用的是ArrayList，HashSet，HashMap，Array。而且，我们也会发现一个规律，用TreeXXX都是排序的。 
-容器 (数组，Collection and Map)：存放数据／对象的对象；实现增删改查操作；
+## Java容器类类库的用途是“保存对象”，它分为两类：
+容器 (Collection and Map)：存放数据／对象的对象；实现增删改查操作；
 集合 (Collection)：交，并，补，差操作；
+* Collection : 一组独立的元素，通常这些元素都服从某种规则。List以元素插入的次序来放置元素，不会重新排列。而Set不接爱重复元素，它会使用自己内部的一个排列机制。
+* Map : 一组成对的“键值对”对象，一群成对的key-value对象，即所持有的是key-value pairs。Map中不能有重复的key，它拥有自己的内部排列机制。或其键值对组成的Set，并且还可以像数组一样扩展多维Map，只要让Map中键值对的每个“值”是一个Map即可。
+
+## 容器类和Array的区别
+容器类仅能持有对象引用（指向对象的指针），而不是将对象信息copy一份至数列某位置。一旦将对象置入容器内，便损失了该对象的型别信息。 
+
+# 最常用的是ArrayList，HashSet，HashMap，Array。而且，我们也会发现一个规律，用TreeXXX都是排序的。 
+2. 在各种Lists中，最好的做法是以ArrayList作为缺省选择。当插入、删除频繁时，使用LinkedList()； 
+3. Vector总是比ArrayList慢，所以要尽量避免使用。 
+4. 在各种Sets中，HashSet通常优于HashTree（插入、查找）。只有当需要产生一个经过排序的序列，才用TreeSet。 HashTree存在的唯一理由：能够维护其内元素的排序状态。 
+5. 在各种Maps中 HashMap用于快速查找。 
+6. 当元素个数固定，用Array，因为Array效率是最高的。 
+
+
 
 Collection和Map接口之间的主要区别在于 ：
 Collection中存储了一组对象，接口是一组允许重复的对象；
@@ -147,6 +135,18 @@ ArrayList存入对象时，抛弃类型信息，所有对象屏蔽为Object，�
 ArrayList与数组的区别主要就是由于动态增容的效率问题了
 
 3）ArrayList可以存任何Object，如String等。
+
+* Vector
+非常类似ArrayList，但是Vector是同步的。由Vector创建的Iterator，虽然和ArrayList创建的Iterator是同一接口，但是，因为Vector是同步的，当一个Iterator被创建而且正在被使用，另一个线程改变了Vector的状态（例 如，添加或删除了一些元素），这时调用Iterator的方法时将抛出ConcurrentModificationException，因此必须捕获该异常。
+
+1.迭代器
+迭代器是一种设计模式，它是一个对象，它可以遍历并选择序列中的对象，而开发人员不需要了解该序列的底层结构。迭代器通常被称为“轻量级”对象，因为创建它的代价小。
+Java中的Iterator功能比较简单，并且只能单向移动：
+(1) 使用方法iterator()要求容器返回一个Iterator。第一次调用Iterator的next()方法时，它返回序列的第一个元素。
+(2) 使用next()获得序列中的下一个元素。
+(3) 使用hasNext()检查序列中是否还有元素。
+(4) 使用remove()将迭代器新返回的元素删除。
+Iterator是Java迭代器最简单的实现，为List设计的ListIterator具有更多的功能，它可以从两个方向遍历List，也可以从List中插入和删除元素。
 
 
 
