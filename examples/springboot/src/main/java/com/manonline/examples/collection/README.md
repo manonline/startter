@@ -58,7 +58,7 @@ HashMap和Hashtable类似，不同之处在于HashMap是非同步的，并且允
 # 工具类
 其实理解了集合框架也就差不多了。工具类，正如上面说过的，是对集合功能的扩展，其中大部分是static函数，一般不必实例化创建对象，而直接调用对集合进行操作。
 接下来为了方便理解，以Array Arrays ArraysList
-Array：认真看api索引的话，Array有两个。一个是sql中的接口，一个是类，我们在这里说的是这个类。　　
-Arrays：对数组的一些列操作。
-ArrayList是一个容器。
+* Array：认真看api索引的话，Array有两个。一个是sql中的接口，一个是类，我们在这里说的是这个类。　　
+* Arrays：对数组的一些列操作。
+* ArrayList是一个容器。
 
