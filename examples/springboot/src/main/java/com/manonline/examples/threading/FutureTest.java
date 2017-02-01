@@ -1,11 +1,10 @@
-package com.manonline.examples.threading.concurrent;
+package com.manonline.examples.threading;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 /**
  * FutureTask也可以用作闭锁。它表示一种抽象的可生成结果的计算。是通过 Callable 来实现的，相当于一种可生成结果的 Runnable，
