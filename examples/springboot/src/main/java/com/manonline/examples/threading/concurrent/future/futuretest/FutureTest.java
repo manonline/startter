@@ -7,9 +7,9 @@ import java.util.concurrent.Future;
 
 /**
  * FutureTask也可以用作闭锁。它表示一种抽象的可生成结果的计算。是通过 Callable 来实现的，相当于一种可生成结果的 Runnable，
- * 并且可处于以下三种状态：等待运行，正在运行，运行完成。当FutureTask进入完成状态后，它会停留在这个状态上。 Future.get
- * 用来获取计算结果，如果FutureTask还未运行完成，则会阻塞。FutureTask
- * 将计算结果从执行计算的线程传递到获取这个结果的线程，而FutureTask 的规范确保了这种传递过程能实现结果的安全发布。
+ * 并且可处于以下三种状态：等待运行，正在运行，运行完成。当FutureTask进入完成状态后，它会停留在这个状态上。
+ * Future.get用来获取计算结果，如果FutureTask还未运行完成，则会阻塞。
+ * FutureTask将计算结果从执行计算的线程传递到获取这个结果的线程，而FutureTask的规范确保了这种传递过程能实现结果的安全发布。
  * FutureTask在Executor框架中表示异步任务，还可以用来表示一些时间较长的计算，这些计算可以在使用计算结果之前启动。
  * 下面我们来构造一个简单的异步任务，来简单示范FutureTask的使用方法。
  */
