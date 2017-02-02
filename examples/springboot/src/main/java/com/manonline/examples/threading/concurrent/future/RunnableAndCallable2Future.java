@@ -84,7 +84,7 @@ public class RunnableAndCallable2Future {
                 }
             });
             // 等待5秒后，再停止第二个任务。因为第二个任务进行的是无限循环
-            Thread.sleep(10);
+            Thread.sleep(5000);
             System.out.println("task2 cancel: " + future2.cancel(true));
 
             /**
