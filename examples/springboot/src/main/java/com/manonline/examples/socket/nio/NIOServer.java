@@ -8,9 +8,47 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by davidqi on 2/3/17.
+ * http://www.iteye.com/magazines/132-Java-NIO
+ * 1. Java IO的各种流是阻塞的。这意味着，当一个线程调用read() 或 write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。
+ * 该线程在此期间不能再干任何事情了。 Java NIO的非阻塞模式，使一个线程从某通道发送请求读取数据，但是它仅能得到目前可用的数据，
+ * 如果目前没有数据可用时，就什么都不会获取。而不是保持线程阻塞，所以直至数据变的可以读取之前，该线程可以继续做其他的事情。
+ * 2. Java NIO的选择器允许一个单独的线程来监视多个输入通道，你可以注册多个通道使用一个选择器，然后使用一个单独的线程来“选择”通道：
+ * 这些通道里已经有可以处理的输入，或者选择已准备写入的通道。这种选择机制，使得一个单独的线程很容易来管理多个通道。
+ * 3. NIO可让您只使用一个（或几个）单线程管理多个通道（网络连接或文件），但付出的代价是解析数据可能会比从一个阻塞流中读取数据更复杂。
+ * ========================================
+ * 通道触发了一个事件意思是该事件已经就绪。所以，某个channel成功连接到另一个服务器称为“连接就绪”。
+ * 一个server socket channel准备好接收新进入的连接称为“接收就绪”。一个有数据可读的通道可以说是“读就绪”。
+ * 等待写数据的通道可以说是“写就绪”。这四种事件用SelectionKey的四个常量来表示：
+ * SelectionKey.OP_CONNECT
+ * SelectionKey.OP_ACCEPT
+ * SelectionKey.OP_READ
+ * SelectionKey.OP_WRITE
+ * ========================================
+ * SelectionKey 记录Channel和Selector的绑定关系
+ * SelectionKey key = channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+ * ========================================
+ * 从SelectionKey访问Channel和Selector
+ * Channel  channel  = selectionKey.channel();
+ * Selector selector = selectionKey.selector();
+ * ========================================
+ * 从SelectionKey中获取关系
+ * int interestSet = selectionKey.interestOps();
+ * boolean isInterestedInAccept  = (interestSet & SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT；
+ * boolean isInterestedInConnect = interestSet & SelectionKey.OP_CONNECT;
+ * boolean isInterestedInRead    = interestSet & SelectionKey.OP_READ;
+ * boolean isInterestedInWrite   = interestSet & SelectionKey.OP_WRITE;
+ * ========================================
+ * 从SelectionKey中获取事件：可以用像检测interest集合那样的方法，来检测channel中什么事件或操作已经就绪。或者
+ * int readySet = selectionKey.readyOps();
+ * selectionKey.isAcceptable();
+ * selectionKey.isConnectable();
+ * selectionKey.isReadable();
+ * selectionKey.isWritable();
+ * ========================================
  */
 public class NIOServer {
     //通道管理器
@@ -47,19 +85,26 @@ public class NIOServer {
         // 轮询访问selector
         while (true) {
             // 当注册的事件到达时，方法返回；否则,该方法会一直阻塞
-            selector.select();
+            int num = selector.select();
+            // 访问“已选择键集（selected key set）”中的就绪通道
+            Set selectedKeys = selector.selectedKeys();
             // 获得selector中选中的项的迭代器，选中的项为注册的事件
-            Iterator ite = this.selector.selectedKeys().iterator();
+            Iterator ite = selectedKeys.iterator();
             while (ite.hasNext()) {
+                // 返回一个键
                 SelectionKey key = (SelectionKey) ite.next();
                 // 删除已选的key,以防重复处理
                 ite.remove();
                 // 客户端请求连接事件
                 if (key.isAcceptable()) {
-                    ServerSocketChannel server = (ServerSocketChannel) key
-                            .channel();
-                    // 获得和客户端连接的通道
+                    ServerSocketChannel server = (ServerSocketChannel) key.channel();
+                    // 获得和客户端连接的通道, 此处为非阻塞所以不论accept()有没有成功建立连接，均会返回
                     SocketChannel channel = server.accept();
+                    // 此处已经不需要做判断，因为是时间通知过来，所以必然能建立
+                    // if(channel != null){
+                    // //do something with socketChannel...
+                    // }
+
                     // 设置成非阻塞
                     channel.configureBlocking(false);
 
