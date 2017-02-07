@@ -1,0 +1,70 @@
+<!-- http://blog.jobbole.com/37518/ -->
+<!-- 当此scan设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 属性／变量定义，可以用${}进行引用 -->
+    <property name="log.path" value="E:\\crawl\\spider\\output"/>
+
+    <root level="INFO">
+        <!-- 指定用哪一个appender -->
+        <appender-ref ref="traceInfo"/>
+    </root>
+    <!-- 用来设置某一个包或者具体的某一个类的日志打印级别 -->
+    <logger name="productInfo" level="info" additivity="false">
+        <appender-ref ref="productAppender"/>
+    </logger>
+    <logger name="categoryInfo" level="info" additivity="false">
+        <appender-ref ref="categoryAppender"/>
+    </logger>
+
+    <appender name="traceInfo" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%-5level][%d{yyyy-MM-dd HH:mm:ss}][%F:%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="categoryAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${log.path}/category.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${log.path}/category_%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>13</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>4MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="productAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 使用logback，你可以选择保留只所有用户的WARN级别的日志，而除了某个用户，例如Alice，而她就是问题的相关用户。当Alice
+        登录系统，她就会以DEBUG级别被记录，而其他用户仍然是以WARN级别来记录日志。这个功能，可以通过在配置文件的XML中添加4行-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <file>${log.path}/product.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/product_%i.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 200MB -->
+                <maxFileSize>200MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+</configuration>
