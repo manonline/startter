@@ -4,7 +4,7 @@ package com.manonline.examples.threading.threadpool;
 
 /**
  * 1. 初识线程池：根据系统自身的环境情况，有效的限制执行线程的数量，使得运行效果达到最佳。线程主要是通过控制执行的线程的数量，
- * 超出数量的线程排队等候，等待有任务执行完毕，再从队列最前面取出任务执行。
+ *    超出数量的线程排队等候，等待有任务执行完毕，再从队列最前面取出任务执行。
  * 2. 线程池作用：减少创建和销毁线程的次数，每个工作线程可以多次使用可根据系统情况调整执行的线程数量，防止消耗过多内存
  * 3. 使用
  *    ExecutorService:线程池接口
@@ -35,10 +35,10 @@ public class Controller {
   // 任务类  
   static class Task implements Runnable {  
       private static volatile int i = 1;  
-      
+
       public void run() {
           // 执行任务  
           System.out.println("任务 " + (i++) + "被 " + Thread.currentThread().getName() + " 完成");  
       }  
   }  
-}  
+}

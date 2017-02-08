@@ -148,7 +148,7 @@ public final class ThreadPool {
                         r = taskQueue.remove(0);
                 }
                 if (r != null) {
-                    // 执行任务
+                    // 执行任务, 因为本身已经在一个新的线程中，所以并不需要start()去重新在开启一个线程，只需要调用run方法即可
                     r.run();
                 }
                 finished_task++;

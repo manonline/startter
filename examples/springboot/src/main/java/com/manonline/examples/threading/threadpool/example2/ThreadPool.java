@@ -10,7 +10,7 @@ public class ThreadPool {
     // 使用单例模式创建线程池
     private static ThreadPool pool;
 
-    private final List<PThread> threads;
+    private final List<WorkThread> threads;
     private volatile boolean isShutdown;
     private int threadCount = 0;
 
@@ -23,12 +23,12 @@ public class ThreadPool {
         return pool;
     }
     private ThreadPool(int poolSize) {
-        threads = new Vector<PThread>(poolSize);
+        threads = new Vector<WorkThread>(poolSize);
         isShutdown = false;
     }
 
     // 在线程中调用，用来将自己加入线程池中
-    synchronized public void putThread(PThread t) {
+    synchronized public void putThread(WorkThread t) {
         if (!isShutdown) {
             threads.add(t);
         } else {
@@ -40,9 +40,9 @@ public class ThreadPool {
     synchronized public void start(Runnable task) {
         if (!isShutdown) {
             if (threads.size() < 1) {
-                new PThread(task, pool).start();
+                new WorkThread(task, pool).start();
             } else {
-                PThread p = threads.remove(0);
+                WorkThread p = threads.remove(0);
                 //设置好
                 p.setTarget(task);
             }
@@ -56,11 +56,9 @@ public class ThreadPool {
 
     // 如果关闭线程池，需要将所有线程也关闭
     synchronized public void shutdown() {
-        for (PThread p : threads)
+        for (WorkThread p : threads)
             p.shutdown();
         threads.clear();
         isShutdown = true;
     }
-
-
 }

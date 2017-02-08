@@ -9,7 +9,7 @@ public class Controller {
         // create a thread pool
         ThreadPool pool = ThreadPool.getThreadPool();
 
-        Runnable r = new Runnable() {
+        Runnable task = new Runnable() {
             public void run() {
                 System.out.println(Thread.currentThread().getName());
                 try {
@@ -20,9 +20,9 @@ public class Controller {
             }
         };
 
-        // start the pool
+        // execute the tasks
         for (int i = 0; i < 10; i++) {
-            pool.start(r);
+            pool.start(task);
         }
         Thread.sleep(1500);
         System.out.println(pool.getThreadCount());
