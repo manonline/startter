@@ -47,7 +47,8 @@
     </appender>
     <appender name="productAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 使用logback，你可以选择保留只所有用户的WARN级别的日志，而除了某个用户，例如Alice，而她就是问题的相关用户。当Alice
-        登录系统，她就会以DEBUG级别被记录，而其他用户仍然是以WARN级别来记录日志。这个功能，可以通过在配置文件的XML中添加4行-->
+        登录系统，她就会以DEBUG级别被记录，而其他用户仍然是以WARN级别来记录日志。这个功能，可以通过在配置文件的XML中添加4行可以用表达式
+        来定义条件-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>DENY</onMatch>

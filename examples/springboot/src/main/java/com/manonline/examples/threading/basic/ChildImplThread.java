@@ -13,4 +13,14 @@ public class ChildImplThread implements Runnable {
             System.out.println("CHILD THREAD IMPLEMENTED Runnable : " + i);
         }
     }
+
+    public static void main(String args[]) {
+
+        // construct an object that implements Runnable interface
+        Runnable r1 = new ChildImplThread();
+        // construct a Thread object with an object implmented runnable interface,
+        // i.e. implemented run() function;
+        Thread t1 = new Thread(r1);
+        t1.start();
+    }
 }

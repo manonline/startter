@@ -15,4 +15,13 @@ public class ChildExtThread extends Thread {
         }
     }
 
+    public static void main(String args[]) {
+        Thread t1 = new ChildExtThread();
+        /**
+         * 一个Thread的实例一旦调用start()方法，这个实例的started标记就标记为true，事实中不管这个线程后来有没有执行到底，
+         * 只要调用了一次start()就再也没有机会运行了。
+         */
+        t1.start();
+    }
+
 }
