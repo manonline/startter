@@ -5,18 +5,18 @@ package com.manonline.examples.threading.concurrent.future;
  * 在Java中，如果需要设定代码执行的最长时间，即超时，可以用Java线程池ExecutorService类配合Future接口来实现。
  * Future接口是Java标准API的一部分，在java.util.concurrent包中。Future接口是Java线程Future模式的实现，
  * 可以来进行异步计算。
- *
+ * <p>
  * Future模式可以这样来描述：我有一个任务，提交给了Future，Future替我完成这个任务。期间我自己可以去做任何想做的事情。
  * 一段时间之后，我就便可以从Future那儿取出结果。就相当于下了一张订货单，一段时间后可以拿着提订单来提货，这期间可以干别
  * 的任何事情。其中Future 接口就是订货单，真正处理订单的是Executor类，它根据Future接口的要求来生产产品。
- *
+ * <p>
  * Future接口提供方法来检测任务是否被执行完，等待任务执行完获得结果，也可以设置任务执行的超时时间。这个设置超时的方法就
  * 是实现Java程序执行超时的关键。
- *
+ * <p>
  * Future的实现类有java.util.concurrent.FutureTask<V>即 javax.swing.SwingWorker<T,V>。通常使用FutureTask来处
  * 理我们的任务。FutureTask类同时又实现了Runnable接口，所以可以直接提交给Executor执行。其实FutureTask是一个Thread的
  * 包装盒，并通过Future接口来和Therad进行交互。
- *
+ * <p>
  * 不直接构造Future对象，也可以使用ExecutorService.submit方法来获得Future对象，submit方法即支持以 Callable接口类型，
  * 也支持Runnable接口作为参数，具有很大的灵活性。
  */
@@ -48,7 +48,7 @@ public class RunnableAndCallable2Future {
             System.out.println("主线程在执行任务");
 
             try {
-                System.out.println("task运行结果"+futureTask.get());
+                System.out.println("task运行结果" + futureTask.get());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -123,6 +123,7 @@ public class RunnableAndCallable2Future {
         // 停止任务执行服务
         executor.shutdownNow();
     }
+
     static class FutureTaskCallable0 implements Callable<String> {
         public String call() throws Exception {
             Thread.sleep(3000);
