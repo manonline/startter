@@ -1,4 +1,6 @@
-package com.manonline.examples.jdksource.initialization;
+package com.manonline.examples.javabasic.initialization;
+
+import com.manonline.examples.javabasic.initialization.Parent;
 
 /**
  * Created by davidqi on 2/9/17.
