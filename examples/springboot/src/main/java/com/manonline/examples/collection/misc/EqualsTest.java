@@ -19,6 +19,10 @@ import java.util.HashSet;
  * Java系统首先调用对象的hashCode()方法获得该对象的哈希码表，然后根据哈希吗找到相应的存储区域，
  * 最后取得该存储区域内的每个元素与该对象进行equals方法比较；
  * -------------------------------------
+ * Object -> hashFunction() -> hashCode -> function() -> storage location
+ * ObjectA如果和ObjectB相等，则hasdCode相等，则storage location相等；
+ * ObjectA如果和ObjectB不相等，hashCode也可能相等，在这种情况下，storage location也必然相等（若不做特殊处理)。
+ * -------------------------------------
  */
 public class EqualsTest {
 

@@ -39,27 +39,6 @@ public class ArrayTest {
         }
     }
 
-    public static void arrayToListViaLoop() {
-        // create an array
-        String[] array = new String[3];
-        array[0] = "王利虎";
-        array[1] = "张三";
-        array[2] = "李四";
-
-        // create a list
-        List<String> list = new ArrayList<String>();
-
-        // loop through array and put element into the list
-        for (int i = 0; i < array.length; i++) {
-            list.add(array[i]);
-        }
-
-        // loop through list and print out
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-    }
-
     public static void listToArrayViaToArray() {
         // create a list
         List<String> list = new ArrayList<String>();
@@ -83,6 +62,27 @@ public class ArrayTest {
         // loop through the array and print out
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
+        }
+    }
+
+    public static void arrayToListViaLoop() {
+        // create an array
+        String[] array = new String[3];
+        array[0] = "王利虎";
+        array[1] = "张三";
+        array[2] = "李四";
+
+        // create a list
+        List<String> list = new ArrayList<String>();
+
+        // loop through array and put element into the list
+        for (int i = 0; i < array.length; i++) {
+            list.add(array[i]);
+        }
+
+        // loop through list and print out
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
     }
 

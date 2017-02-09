@@ -6,14 +6,21 @@ import java.util.Set;
 
 /**
  * Created by davidqi on 1/31/17.
- * HashMap -> Table[] -> Node<K, V> -> Node<K, V>
- *     Node<K, V> implements Entry<K, V>
- *     Node<K, V>.next -> Node<K, V>
- *     ===========================================
- *     Set<K, v> EntrySet
- *     Set<K> KeySet
- *     Collections<V> Vaules
- *     ===========================================
+ * HashMap 维护了一个数组 Table[]
+ * Table[] 中的元素是 Node<K, V>
+ * Node<K, V> 实现了Entry<K, V>, 并包含
+ *      K
+ *      V
+ *      Node<K, V> 指向下一个元素
+ * ===============================================
+ * <K, V>
+ *     K 的 hashCode决定该键值对在Table[]中的位置；
+ *     如果此位置已有元素（两个Key的HashCode一样），则把新元素添加到已有元素的后面，也即next
+ * ===============================================
+ * capacity : 数组的大小
+ * loadFactor : 数组填充到多少百分比需要扩容
+ * resize : JDK 1.7, 要通过indexFor(hash, capacity)重新计算元素在新数组中的位置
+ * ===============================================
  */
 public class HashMapTest {
 

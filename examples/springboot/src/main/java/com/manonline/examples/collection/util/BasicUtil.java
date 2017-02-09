@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  * Created by davidqi on 1/31/17.
- * fill —— 使用指定元素替换指定列表中的所有元素。
- * frequency —— 返回指定 collection 中等于指定对象的元素数。
- * indexOfSubList —— 返回指定源列表中第一次出现指定目标列表的起始位置，如果没有出现这样的列表，则返回 -1。
+ * fill             —— 使用指定元素替换指定列表中的所有元素。
+ * frequency        —— 返回指定 collection 中等于指定对象的元素数。
+ * indexOfSubList   —— 返回指定源列表中第一次出现指定目标列表的起始位置，如果没有出现这样的列表，则返回 -1。
  * lastIndexOfSubList —— 返回指定源列表中最后一次出现指定目标列表的起始位置，如果没有出现这样的列表，则返回-1。
  * max —— 根据元素的自然顺序，返回给定 collection 的最大元素。
  * min —— 根据元素的自然顺序 返回给定 collection 的最小元素。
