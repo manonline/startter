@@ -8,39 +8,83 @@ package com.manonline.examples.javabasic.override;
  */
 public class Child extends Parent {
 
+    public String publicValue = "Child Public Value";
+    public final String publicFinalValue = "Child Public Final Value";
+    public static String publicStaticValue = "Child Public Static Value";
+    public static final String publicStaticFinalValue = "Child Public Static Final Value";
+
+    private String privateValue = "Child Public Value";
+    private final String privateFinalValue = "Child Final Value";
+    private static String privateStaticValue = "Child Static Value";
+    private static final String privateStaticFinalValue = "Child Static Final Value";
+
+    public String publicMethod() {
+        return "Child Public Method ...";
+    }
+
+    /**
+     * Final Method cannot be override
+     */
+//    public final String publicFinalMethod() {
+//        return "Child Public Final Method ...";
+//    }
+    public static String publicStaticMethod() {
+        return "Child Public Static Method ...";
+    }
+    /**
+     * Final Method cannot be override
+     */
+//    public static final String publicStaticFinalMethod() {
+//        return "Child Public Static Final Method ...";
+//    }
+
+    private String privateMethod() {
+        return "Child Private Method ...";
+    }
+    private final String privateFinalMethod() {
+        return "Child Private Final Method ...";
+    }
+    private static String privateStaticMethod() {
+        return "Child Private Static Method ...";
+    }
+    private static final String privateStaticFinalMethod() {
+        return "Child Private Static Final Method ...";
+    }
+
+    // expose the private method
+    public String method1() {
+        return privateMethod();
+    }
+    public final String method2() {
+        return privateFinalMethod();
+    }
+    public static String method3() {
+        return privateStaticMethod();
+    }
+    public static final String method4() {
+        return privateStaticFinalMethod();
+    }
+
     private int value = 1;
 
     // 正确，重写父类方法，可以扩大访问权限
-    public int method1(int a, int b) {
-        return 0;
+    public String protectedMethod(int m, int n) {
+        return "Child Protected Method ...";
     }
 
     // 错误，重写父类方法，不能降低了访问权限
-    //private int method1(int a, int b) { return 0; }
+    //private String protectedMethod(int m, int n) { return "Child Protected Method ..."; }
 
     // 错误，重写父类方法，不能改变返回值类型
-    //private long method1(int a, int b) { return 0; }
+    //private long protectedMethod(int m, int n) { return 1L; }
 
     // 正确，重载自身的方法，可以有不同的访问权限和返回值类型
-    public short method1(int a, long b, int c) {
-        return 0;
+    public String protectedMethod(int a, long b) {
+        return "Child Protected Method ...";
     }
 
     // 正确，重载自身的方法，可以有不同的访问权限和返回值类型
-    private int method1(int a, long b) {
+    public int protectedMethod(int a, long b, int c) {
         return 0;
-    }
-
-    public static void main(String[] arges) {
-        Parent parent = new Child();
-
-        parent.method1(1, 1);
-
-        /**
-         * 重写／覆盖只发生在函数上面，并不发生在变量上面；
-         * 此处仍然访问parent中的value而不是sub中的value;
-         * 如果parent 中的value为private会有编译错误；
-         */
-        parent.value = 5;
     }
 }
