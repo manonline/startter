@@ -2,6 +2,8 @@ package com.manonline.examples.jdbctemplate.person;
 
 /**
  * Created by davidqi on 2/10/17.
+ * http://blog.csdn.net/skmbw/article/details/9105261
+ *
  */
 
 import java.util.List;
