@@ -24,6 +24,7 @@ public class Pagination {
              * ResultSet.RTYPE_FORWORD_ONLY：这是缺省值，只可向前滚动；
              * ResultSet.TYPE_SCROLL_INSENSITIVE：双向滚动，但不及时更新，就是如果数据库里的数据修改过，并不在ResultSet中反应出来。
              * ResultSet.TYPE_SCROLL_SENSITIVE：双向滚动，并及时跟踪数据库的更新,以便更改ResultSet中的数据。
+             *
              * ResultSet.CONCUR_READ_ONLY：这是缺省值，指定不可以更新 ResultSet
              * ResultSet.CONCUR_UPDATABLE：指定可以更新 ResultSet
              */

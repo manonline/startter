@@ -58,7 +58,7 @@ public class Transaction {
                 conn.rollback(sp);
                 conn.commit();
             }
-//            // 如果没有会滚点，直接回滚事务，无需再次提交
+//            // 如果没有回滚点，直接回滚事务，无需再次提交
 //            if (conn != null) {
 //                conn.rollback();
 //            }

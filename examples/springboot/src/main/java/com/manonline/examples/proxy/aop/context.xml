@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+    <!-- 实际业务bean -->
+    <bean id="serviceToCglib" class="com.manonline.examples.proxy.aop.Echo"/>
+    <bean id="serviceToJdk" class="com.manonline.examples.proxy.aop.YellImpl"/>
+
+    <!-- 切面bean -->
+    <bean id="aspectBean" class="com.manonline.examples.proxy.aop.aspect.MyAspect"/>
+    <!-- AOP -->
+    <aop:config>
+        <!-- 定义切面 -->
+        <aop:aspect id="MyAspect" ref="aspectBean">
+            <!-- 切点 : 切面应用到什么方法上面 -->
+            <aop:pointcut id="cutOnServiceSay" expression="(execution(* com.manonline.examples.proxy.aop.Echo.say(..)) or
+                                                            execution(* com.manonline.examples.proxy.aop.YellImpl.say(..)))"/>
+            <!-- 定义advisor : pointcut在具体的切点（方法）上 + advice怎么(前中环绕) + aspect执行什么额外操作(切面) -->
+            <aop:before pointcut-ref="cutOnServiceSay" method="doBefore"/>
+            <aop:after pointcut-ref="cutOnServiceSay" method="doAfter"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

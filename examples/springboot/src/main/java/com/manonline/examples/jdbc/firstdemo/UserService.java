@@ -1,8 +1,8 @@
-package com.manonline.examples.jdbc.service;
+package com.manonline.examples.jdbc.firstdemo;
 
-import com.manonline.examples.jdbc.dao.DaoFactory;
-import com.manonline.examples.jdbc.domain.User;
-import com.manonline.examples.jdbc.dao.UserDao;
+import com.manonline.examples.jdbc.firstdemo.DaoFactory;
+import com.manonline.examples.jdbc.firstdemo.User;
+import com.manonline.examples.jdbc.firstdemo.UserDao;
 
 /**
  * Created by davidqi on 2/11/17.

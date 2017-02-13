@@ -1,7 +1,7 @@
-package com.manonline.examples.jdbc;
+package com.manonline.examples.jdbc.firstdemo;
 
-import com.manonline.examples.jdbc.domain.User;
-import com.manonline.examples.jdbc.service.UserService;
+import com.manonline.examples.jdbc.firstdemo.User;
+import com.manonline.examples.jdbc.firstdemo.UserService;
 
 import java.sql.Date;
 

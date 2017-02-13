@@ -1,6 +1,6 @@
 package com.manonline.examples.jdbc.template;
 
-import com.manonline.examples.jdbc.dao.DaoException;
+import com.manonline.examples.jdbc.firstdemo.DaoException;
 import com.manonline.examples.jdbc.strategy.RowMapper;
 import com.manonline.examples.jdbc.utils.JdbcUtils;
 

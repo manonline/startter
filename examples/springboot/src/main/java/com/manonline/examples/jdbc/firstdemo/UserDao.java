@@ -1,6 +1,6 @@
-package com.manonline.examples.jdbc.dao;
+package com.manonline.examples.jdbc.firstdemo;
 
-import com.manonline.examples.jdbc.domain.User;
+import com.manonline.examples.jdbc.firstdemo.User;
 
 /**
  * Created by davidqi on 2/11/17.

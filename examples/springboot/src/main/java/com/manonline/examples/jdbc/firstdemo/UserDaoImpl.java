@@ -1,9 +1,9 @@
-package com.manonline.examples.jdbc.dao.impl;
+package com.manonline.examples.jdbc.firstdemo;
 
 import com.manonline.examples.jdbc.utils.JdbcUtils;
-import com.manonline.examples.jdbc.dao.DaoException;
-import com.manonline.examples.jdbc.dao.UserDao;
-import com.manonline.examples.jdbc.domain.User;
+import com.manonline.examples.jdbc.firstdemo.DaoException;
+import com.manonline.examples.jdbc.firstdemo.UserDao;
+import com.manonline.examples.jdbc.firstdemo.User;
 
 import java.sql.Connection;
 import java.sql.Date;

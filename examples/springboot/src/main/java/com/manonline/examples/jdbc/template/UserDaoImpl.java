@@ -1,12 +1,8 @@
 package com.manonline.examples.jdbc.template;
 
-import com.manonline.examples.jdbc.dao.DaoException;
-import com.manonline.examples.jdbc.domain.User;
+import com.manonline.examples.jdbc.firstdemo.User;
 import com.manonline.examples.jdbc.strategy.RowMapper;
-import com.manonline.examples.jdbc.utils.JdbcUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

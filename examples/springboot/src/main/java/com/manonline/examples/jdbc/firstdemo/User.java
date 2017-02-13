@@ -1,4 +1,4 @@
-package com.manonline.examples.jdbc.domain;
+package com.manonline.examples.jdbc.firstdemo;
 
 /**
  * Created by davidqi on 2/11/17.

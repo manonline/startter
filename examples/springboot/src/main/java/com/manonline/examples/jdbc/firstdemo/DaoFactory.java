@@ -1,4 +1,4 @@
-package com.manonline.examples.jdbc.dao;
+package com.manonline.examples.jdbc.firstdemo;
 
 /**
  * Created by davidqi on 2/11/17.
@@ -29,6 +29,7 @@ public class DaoFactory {
     }
 
     public static DaoFactory getInstance() {
+        // 没有考虑多线程????
         return instance;
     }
 
