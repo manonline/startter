@@ -32,6 +32,7 @@ public class PerformanceProxy implements MethodInterceptor {
 
     private Enhancer enhancer = new Enhancer();
 
+    // 用Enhancer来包装父类，从而创建子类
     public Object getProxy(Class targetClazz) {
         // 将被代理设置成父类
         enhancer.setSuperclass(targetClazz);
@@ -44,7 +45,7 @@ public class PerformanceProxy implements MethodInterceptor {
 
     }
 
-    // 拦截父类所有方法的调用
+    // 调用方法 －> 调用创建出来的子类方法 -> 相当于拦截父类所有方法的调用
     public Object intercept(Object target, Method method, Object[] args,
                             MethodProxy proxy) throws Throwable {
         // 加入额外的处理
