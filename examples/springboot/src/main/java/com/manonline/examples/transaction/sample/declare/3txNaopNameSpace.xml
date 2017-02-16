@@ -1,0 +1,45 @@
+<!-- 前面两种声明式事务配置方式奠定了 Spring 声明式事务管理的基石。在此基础上，Spring 2.x 引入了 <tx> 命名空间，结合使用
+ <aop> 命名空间，带给开发人员配置声明式事务的全新体验，配置变得更加简单和灵活。另外，得益于 <aop> 命名空间的切点表达式支持，
+ 声明式事务也变得更加强大。 -->
+
+<beans>
+
+    <bean id="bankService" class="footmark.spring.core.tx.declare.namespace.BankServiceImpl">
+        <property name="bankDao" ref="bankDao"/>
+    </bean>
+
+    <!-- 定义一个建言 ：建言内容是事务管理器-->
+    <!-- transaction-manager = "transactionManager"可以省略，如果transactionManager的Bean名字transactionManager-->
+    <tx:advice id="bankAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- 各个方法上面定义事务属性 -->
+            <tx:method name="transfer" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+
+    <aop:config>
+        <!-- 定义切点 : 被包装的方法 -->
+        <aop:pointcut id="bankPointcut" expression="execution(* *.transfer(..))"/>
+        <!-- 定义连接点 : 绑定建言和切面-->
+        <aop:advisor advice-ref="bankAdvice" pointcut-ref="bankPointcut"/>
+    </aop:config>
+
+</beans>
+
+<!--
+<beans>
+
+    <bean id="bankService" class="footmark.spring.core.tx.declare.namespace.BankServiceImpl">
+        <property name="bankDao" ref="bankDao"/>
+    </bean>
+    如果默认事务属性就能满足要求的话，没必要再定义事务属性；
+    <tx:advice id="bankAdvice" transaction-manager="transactionManager">
+
+    <aop:config>
+        <aop:pointcut id="bankPointcut" expression="execution(**.transfer(..))"/>
+        <aop:advisor advice-ref="bankAdvice" pointcut-ref="bankPointcut"/>
+    </aop:config>
+
+</beans>
+-->

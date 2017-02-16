@@ -1,0 +1,41 @@
+
+<!-- TransactionInterceptor方式虽好，但是却存在一个非常恼人的问题：配置文件太多。我们必须针对每一个目标对象配置一个 ProxyFactoryBean
+另外，虽然可以通过父子 Bean 的方式来复用 TransactionInterceptor 的配置，但是实际的复用几率也不高；这样，加上目标对象本身，每一个业务类
+可能需要对应三个 <bean/> 配置，随着业务类的增多，配置文件将会变得越来越庞大，管理配置文件又成了问题。为了缓解这个问题，Spring 为我们提供
+了 TransactionProxyFactoryBean，用于将TransactionInterceptor 和 ProxyFactoryBean 的配置合二为一。 -->
+
+<beans>
+    <!-- 实际业务Bean -->
+    <bean id="bankServiceTarget" class="footmark.spring.core.tx.declare.classic.BankServiceImpl">
+        <property name="bankDao" ref="bankDao"/>
+    </bean>
+
+    <!-- 代理类 ：包装实际业务Bean -->
+    <bean id="bankService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <!-- 实际业务Bean -->
+        <property name="target" ref="bankServiceTarget"/>
+        <!-- 事务管理器 -->
+        <property name="transactionManager" ref="transactionManager"/>
+        <!-- 被拦截的方法及其上面事务的定义 -->
+        <property name="transactionAttributes">
+            <!-- 拦截所有的以Service结尾的方法 -->
+            <prop name="*Service">
+                PROPAGATION_REQUIRED，
+                ISOLATION_READ_COMMITTED，
+                TIMEOUT_20，
+                +AbcException，
+                +DefException，
+                -HijException
+            </prop>
+            <!-- 拦截transfer方法 -->
+            <prop key="transfer">
+                PROPAGATION_REQUIRED
+            </prop>
+            <!-- 拦截test方法 -->
+            <prop key="test">
+                PROPAGATION_REQUIRED
+            </prop>
+        </property>
+    </bean>
+
+</beans>

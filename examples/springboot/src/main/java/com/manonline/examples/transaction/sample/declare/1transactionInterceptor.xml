@@ -1,0 +1,48 @@
+
+<beans...>
+    <!-- 实际的业务Bean -->
+    <bean id="bankServiceTarget" class="footmark.spring.core.tx.declare.origin.BankServiceImpl">
+        <property name="bankDao" ref="bankDao"/>
+    </bean>
+
+    <!-- 应用中获取的Bean ：其实是一个Proxy -->
+    <bean id="bankService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- Proxy包装的对象 ：实际的业务Bean -->
+        <property name="target" ref="bankServiceTarget"/>
+        <!-- 指定拦截器列表 ： 拦截器负责织入-->
+        <property name="interceptorNames">
+            <list>
+                <!-- 拦截器 -->
+                <idref bean="transactionInterceptor"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 拦截器定义 : 负责织入 -->
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager" ref="transactionManager"/>
+        <!-- 被拦截的方法及其上面事务的定义 -->
+        <property name="transactionAttributes">
+            <props>
+                <!-- 拦截所有的以Service结尾的方法 -->
+                <prop name="*Service">
+                    PROPAGATION_REQUIRED，
+                    ISOLATION_READ_COMMITTED，
+                    TIMEOUT_20，
+                    +AbcException，
+                    +DefException，
+                    -HijException
+                </prop>
+                <!-- 拦截transfer方法 -->
+                <prop key="transfer">
+                    PROPAGATION_REQUIRED
+                </prop>
+                <!-- 拦截test方法 -->
+                <prop key="test">
+                    PROPAGATION_REQUIRED
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
