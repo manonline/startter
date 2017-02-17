@@ -23,10 +23,10 @@ public class TransactionManagerEnabledTransaction {
         txStatus = txManager.getTransaction(txDefinition);
         boolean result = false;
         try {
-                userDao.update(user);
-                // 提交事务
-                txManager.commit(txStatus);
-                result = true;
+            userDao.update(user);
+            // 提交事务
+            txManager.commit(txStatus);
+            result = true;
         } catch (Exception ex) {
             result = false;
             txManager.rollback(txStatus);

@@ -1,21 +1,8 @@
 
-<beans...>
+<beans>
     <!-- 实际的业务Bean -->
     <bean id="bankServiceTarget" class="footmark.spring.core.tx.declare.origin.BankServiceImpl">
         <property name="bankDao" ref="bankDao"/>
-    </bean>
-
-    <!-- 应用中获取的Bean ：其实是一个Proxy -->
-    <bean id="bankService" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <!-- Proxy包装的对象 ：实际的业务Bean -->
-        <property name="target" ref="bankServiceTarget"/>
-        <!-- 指定拦截器列表 ： 拦截器负责织入-->
-        <property name="interceptorNames">
-            <list>
-                <!-- 拦截器 -->
-                <idref bean="transactionInterceptor"/>
-            </list>
-        </property>
     </bean>
 
     <!-- 拦截器定义 : 负责织入 -->
@@ -42,6 +29,19 @@
                     PROPAGATION_REQUIRED
                 </prop>
             </props>
+        </property>
+    </bean>
+
+    <!-- 应用中获取的Bean ：其实是一个Proxy -->
+    <bean id="bankService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- Proxy包装的对象 ：实际的业务Bean -->
+        <property name="target" ref="bankServiceTarget"/>
+        <!-- 指定拦截器列表 ： 拦截器负责织入-->
+        <property name="interceptorNames">
+            <list>
+                <!-- 拦截器 -->
+                <idref bean="transactionInterceptor"/>
+            </list>
         </property>
     </bean>
 

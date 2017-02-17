@@ -1,0 +1,30 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 被代理对象 ： 实际业务bean -->
+    <bean id="app" class="com.manonline.examples.proxy.configsample.App"/>
+
+    <!-- 切面实现类 ： Bean -->
+    <bean id="audience" class="com.manonline.examples.proxy.configsample.xml.Audience"/>
+
+    <!-- aop的定义移动到代码中通过注解的方式实现 -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- 下面手动配置的方式已经不在需要
+    <aop:config>
+        <aop:aspect ref="audience">
+            <aop:pointcut id="p" expression="(* App.add(..))"></aop:pointcut>>
+            <aop:before pointcut-ref="p" method="takeSeats"/>
+            <aop:before pointcut-ref="p" method="turnOffCellphone"/>
+            <aop:after-returning pointcut-ref="p" method="applaud"/>
+            <aop:after-throwing pointcut-ref="p" method="demandRefund"/>
+        </aop:aspect>
+    </aop:config>
+    -->
+
+</beans>
