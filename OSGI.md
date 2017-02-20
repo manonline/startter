@@ -60,9 +60,9 @@ Declarative Service (DS)是OSGi Core Framework 的一个标准服务。DS让我�
 - 在Servlet容器中嵌入OSGI框架
 
 # 底层框架
-－ Equinox是OSGI Service Platform Release 4的一个实现。是Eclipse 模块化运行时的核心。
-－ Knopflerfish另一个选择。
-－ Apache Felix是Apache软件基金会赞助的一个OSGI容器
-－ Spring Dynamic Module -> VXXXX
+- Equinox是OSGI Service Platform Release 4的一个实现。是Eclipse 模块化运行时的核心。
+- Knopflerfish另一个选择。
+- Apache Felix是Apache软件基金会赞助的一个OSGI容器
+- Spring Dynamic Module -> VXXXX
 
 http://hellojava.info/?p=152
