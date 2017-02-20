@@ -64,3 +64,5 @@ Equinox是OSGI Service Platform Release 4的一个实现。是Eclipse 模块化�
 Knopflerfish另一个选择。
 Apache Felix是Apache软件基金会赞助的一个OSGI容器
 Spring Dynamic Module -> VXXXX
+
+http://hellojava.info/?p=152
