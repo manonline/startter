@@ -10,7 +10,12 @@ Java的类加载器(Classloader)是一种分层结构，分为
 - 无法确定jar之间的依赖关系：现有的JAR标准中缺乏对与Jar文件之间依赖关系的定义支持，因此只有在运行时间无法找到所需的类时，才会打 java.lang.ClassNotFoundException，但这通常不能有效帮助开发人员解决问题；
 - 信息隐藏：如果一个jar在类路径上并且被加载，那么所有该jar中的公共类（public class）都会被加载，无法避免某些类被隐藏从而不被加载。尽管在J2EE中改进了类加载机制，可以支持以war或者ear应用为单元进行加载，但是这些问题还是没有被很好地解决，并且热部署效果让人忧心。
 
-OSGi是一个动态的Java模块（Module）系统，它规定了如何定义一个Module以及这些模块之间如何交互。每个OSGi的Java模块被称为一个bundle。每个bundle都有自己的类路径，可以精确规定哪些Java包和类可以被导出，需要导入哪些其它bundle的哪些类和包，并从而指明bundle之间的依赖关系。另外bundle可以被在运行时间安装，更新，卸载并且不影响整个应用。通过这种方式，分层的类加载机制变成了网状的类加载机制。在应用程序启动之前，OSGi就可以检测出来是否所有的依赖关系被满足，并在不满足时精确报出是哪些依赖关系没被满足。
+OSGi是一个动态的Java模块（Module/Bundle）系统，它规定了如何定义一个模块以及这些模块之间如何交互。每个OSGi的Java模块被称为一个bundle。
+- 每个bundle都有自己的类路径，
+- 可以精确规定哪些Java包和类可以被导出，
+- 需要导入哪些其它bundle的哪些类和包，并从而指明bundle之间的依赖关系。
+- bundle可以被在运行时间安装，更新，卸载并且不影响整个应用。
+通过这种方式，分层的类加载机制变成了网状的类加载机制。在应用程序启动之前，OSGi就可以检测出来是否所有的依赖关系被满足，并在不满足时精确报出是哪些依赖关系没被满足。
 
 # 分层
 通常，OSGi 框架从概念上可以分为三层 
@@ -20,6 +25,7 @@ OSGi是一个动态的Java模块（Module）系统，它规定了如何定义一
 
 ## 模块层
 Bundle 是 OSGi 中的基本组件，其表现形式仍然为 Java 概念中传统的 Jar 包，同时通过 META-INF 目录下的 MANIFEST.MF 文件对其予以进一步的定义。通常一个 MANIFEST.MF 文件的内容如下所示：
+<code>
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Util
@@ -34,7 +40,8 @@ Export-Package : com.ibm.director.la.util;uses:="org.osgi.framework"
 Bundle-ClassPath : libs/jfreechart-1.0.13-swt.jar,
 libs/jfreechart-1.0.13.jar,
 libs/jfreechart-1.0.13-experimental.jar
- 
+</code>
+
 Bundle之间的交互方式：
 - 通过Package的Export(对外暴露自己的一个或多个package)和Import(导入别人的一个或多个package)来进行。
 - 通过Service的方式进行。一个Bundle作为Service提供方，对外提供Servcie .使用者可以查找到提供的Service. 并使用这个ServÎce. 而提供/使用Service又存在两种方式：一种是经典的做法，通过BundlcContext ( Bundle 的上下文)来提供和获取.一种是使用Declarative Service来实现.
