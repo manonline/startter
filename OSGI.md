@@ -24,7 +24,8 @@ OSGi是一个动态的Java模块（Module/Bundle）系统，它规定了如何�
 - Service Layer : 服务层主要涉及模块之间的交互和通信。
 
 ## 模块层
-Bundle 是 OSGi 中的基本组件，其表现形式仍然为 Java 概念中传统的 Jar 包，同时通过 META-INF 目录下的 MANIFEST.MF 文件对其予以进一步的定义。通常一个 MANIFEST.MF 文件的内容如下所示：
+Bundle 是 OSGi 中的基本组件，其表现形式仍然为 Java 概念中传统的 Jar 包，同时通过 META-INF 目录下的 MANIFEST.MF 文件对其予以进一步的定义。每一个Bundle都有自己的ClassLoader
+通常一个 MANIFEST.MF文件的内容如下所示：
 <code>
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
