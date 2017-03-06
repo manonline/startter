@@ -115,14 +115,66 @@ Though it works great for a few accesses, the real issue with this operation is 
 - For each row in the outer relation
 - You look at all the rows in the inner relation to see if there are rows that match
 In term of disk I/O, for each of the N rows in the outer relation, the inner loop needs to read M rows from the inner relation. This algorithm needs to read N + N*M rows from disk. 
-#### Inner Relation (Memory)
+##### Inner Relation (Memory)
 if the inner relation is small enough, you can put the relation in memory and just have M +N reads. With this modification, the inner relation must be the smallest one since it has more chance to fit in memory. In terms of time complexity it makes no difference but in terms of disk I/O it’s way better to read only once both relations.
-#### Inner Relation (Index)
+##### Inner Relation (Index)
 the inner relation can be replaced by an index, it will be better for the disk I/O.
-#### Outer/Inner Relation (Batch)
+##### Outer/Inner Relation (Batch)
 - instead of reading both relation row by row,
 - you read them bunch by bunch and keep 2 bunches of rows (from each relation) in memory,
 - you compare the rows inside the two bunches and keep the rows that match,
 - then you load new bunches from disk and compare them
 - and so on until there are no bunches to load.
 Each disk access gathers more data than the previous algorithm but it doesn’t matter since they’re sequential accesses (the real issue with mechanical disks is the time to get the first data).
+
+#### Hash Join
+The hash join is more complicated but gives a better cost than a nested loop join in many situations. The idea of the hash join is to:
+- Get all elements from the inner relation
+- Build an in-memory hash table
+- Get all elements of the outer relation one by one
+- Compute the hash of each element (with the hash function of the hash table) to find the associated bucket of the inner relation
+- find if there is a match between the elements in the bucket and the element of the outer table
+
+#### Merge Join
+The merge join is the only join that produces a sorted result. Note: In this simplified merge join, there are no inner or outer tables; they both play the same role. But real implementations make a difference, for example, when dealing with duplicates. The merge join can be divided into of two steps:
+- (Optional) Sort join operations: Both the inputs are sorted on the join key(s).
+- Merge join operation: The sorted inputs are merged together.
+##### Sort
+##### Merge Join
+This part is very similar to the merge operation of the merge sort we saw. But this time, instead of picking every element from both relations, we only pick the elements from both relations that are equals. Here is the idea:
+- you compare both current elements in the 2 relations (current=first for the first time)
+- if they’re equal, then you put both elements in the result and you go to the next element for both relations
+- if not, you go to the next element for the relation with the lowest element (because the next element might match)
+- and repeat 1,2,3 until you reach the last element of one of the relation.
+This works because both relations are sorted and therefore you don’t need to “go back” in these relations.
+
+### Which One is The Best
+If there was a best type of joins, there wouldn’t be multiple types. This question is very difficult because many factors come into play like:
+- The amount of free memory: without enough memory you can say goodbye to the powerful hash join (at least the full in-memory hash join)
+- The size of the 2 data sets. For example if you have a big table with a very small one, a nested loop join will be faster than a hash join because the hash join has an expensive creation of hashes. If you have 2 very large tables the nested loop join will be very CPU expensive.
+- The presence of indexes. With **2 B+Tree indexes** the smart choice seems to be the **merge join**
+- If the result need to be sorted: Even if you’re working with unsorted data sets, you might want to use a costly merge join (with the sorts) because at the end the result will be sorted and you’ll be able to chain the result with another merge join (or maybe because the query asks implicitly/explicitly for a sorted result with an ORDER BY/GROUP BY/DISTINCT operation)
+- If the relations are already sorted: In this case the merge join is the best candidate
+- The type of joins you’re doing: is it an equijoin (i.e.: tableA.col1 = tableB.col2)? Is it an inner join, an outer join, a cartesian product or a self-join? Some joins can’t work in certain situations.
+- The distribution of data. If the data on the join condition are skewed (For example you’re joining people on their last name but many people have the same), using a hash join will be a disaster because the hash function will create ill-distributed buckets.
+- If you want the join to be executed by multiple threads/process
+
+### Real Optimization
+The real job of an optimizer is to find a good solution on a limited amount of time. On limited amount of time, a given order of joins, each join has 3 possibilities: HashJoin, MergeJoin, NestedJoin. for a given order of joins there are 34 possibilities. The join ordering is a permutation problem on a binary tree and there are (2*4)!/(4+1)! possible orders. For this very simplified problem, I end up with 34*(2*4)!/(4+1)! possibilities. In non-geek terms, it means 27 216 possible plans. If I now add the possibility for the merge join to take 0,1 or 2 B+Tree indexes, the number of possible plans becomes 210 000. Did I forget to mention that this query is VERY SIMPLE? Most of the time an optimizer doesn’t find the best solution but a “good” one.
+
+- Dynamic Programming
+- Greedy Algorithms
+- Other Algorithms
+
+### Query Plan Cache
+Since the creation of a plan takes time, most databases store the plan into a query plan cache to avoid useless re-computations of the same query plan. It’s kind of a big topic since the database needs to know when to update the outdated plans. The idea is to put a threshold and if the statistics of a table have changed above this threshold then the query plan involving this table is purged from the cache.
+
+### Query executor
+At this stage we have an optimized execution plan. This plan is compiled to become an executable code. Then, if there are enough resources (memory, CPU) it is executed by the query executor. The operators in the plan (JOIN, SORT BY …) can be executed in a sequential or parallel way; it’s up to the executor. To get and write its data, the query executor interacts with the data manager, which is the next part of the article.
+
+## Data Manager
+At this step, the query manager is executing the query and needs the data from the tables and indexes. It asks the data manager to get the data, but there are 2 problems:
+- Relational databases use a transactional model. So, you can’t get any data at any time because someone else might be using/modifying the data at the same time.
+- Data retrieval is the slowest operation in a database, therefore the data manager needs to be smart enough to get and keep data in memory buffers.
+
+
